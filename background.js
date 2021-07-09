@@ -36,9 +36,6 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   }
 });
 
-let app_id = "693446b9";
-let api_key = "74d74aec85803453bbbd290db910aacb";
-
 /*
 Message handler that send's back word's meaning
 */

@@ -1,42 +1,70 @@
-.ce-main {
-  width: 400px;
-  height: 600px;
+.ce-modal {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  position: absolute;
-  z-index: 9999;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  color: white;
-  font-size: 40px;
-  background-color: red;
-}
-
-#ce-name {
-  font-size: 70px;
-  color: white;
-}
-
-#ce-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  width: 200px;
-  height: 150px;
-  border-radius: 5px;
-  background-color: black;
-  color: white;
-  font-size: 30px;
-}
-
-.ce-modal {
-  width: 250px;
-  height: 200px;
+  width: 400px;
+  background-color: lightblue;
   position: fixed;
-  background: blue;
+  z-index: 999;
+}
+
+.ce-modal-header {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  padding: 5px;
+  background-color: lightgreen;
+}
+
+.ce-modal-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 5px;
+}
+
+.speaker {
+  vertical-align: middle;
+  box-sizing: border-box;
+  display: inline-block;
+  background: currentColor;
+  background-clip: content-box;
+  width: 1em;
+  height: 1em;
+  border: 0.333em solid transparent;
+  border-right-color: currentColor;
+  position: relative;
+  left: -0.337em;
+}
+
+.speaker.-on:before,
+.speaker.-on:after {
+  content: "";
+  background: currentColor;
+  width: 0.1em;
+  position: absolute;
+}
+.speaker.-on:before {
+  height: 0.333em;
+  right: -0.533em;
+}
+.speaker.-on:after {
+  height: 0.667em;
+  right: -0.733em;
+  top: -50%;
+}
+.speaker.-off:before,
+.speaker.-off:after {
+  content: "";
+  background: currentColor;
+  width: 0.1em;
+  position: absolute;
+  height: 1.2em;
+  margin-top: -0.333em;
+  top: -0.1em;
+  left: 0.1em;
+  transform: translateX(0.333em) rotate(-45deg);
+}
+.speaker.-off:before {
+  background: #04233d;
+  left: 0.2em;
 }
