@@ -2,9 +2,7 @@
 Runs every time the extention is installed or re installed
 */
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.local.set({
-    name: "Jack",
-  });
+  chrome.storage.local.set({ wordList: [] });
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {

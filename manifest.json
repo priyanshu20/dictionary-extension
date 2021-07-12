@@ -17,7 +17,6 @@
         "scripting"
     ],
     "host_permissions": [
-        "https://www.google.com/*",
-        "https://developer.mozilla.org/*"
+        "*://*/*"
     ]
 }
