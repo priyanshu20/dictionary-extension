@@ -2,8 +2,6 @@
 
 .ce-modal {
   overflow: auto;
-  max-width: 600px;
-  max-height: 350px;
   overflow: auto;
   padding: 10px;
   border-radius: 5px;
@@ -21,6 +19,12 @@
   align-items: center;
   font-size: 24px;
   padding: 5px;
+}
+
+.ce-word {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 i {
@@ -42,6 +46,7 @@ i {
   overflow: hidden;
   position: relative;
   border-radius: 5px;
+  padding: 25px 5px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 .ce-slider {
@@ -50,8 +55,6 @@ i {
 }
 .ce-slider section {
   flex-basis: 100%;
-  /* justify-content: center;
-  align-items: center; */
   display: flex;
   padding: 2px;
   flex-direction: column;
@@ -77,6 +80,7 @@ i {
   right: 10px;
 }
 .ce-control ul {
+  margin-top: 20px;
   list-style: none;
   display: flex;
   position: absolute;
@@ -119,6 +123,7 @@ i {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 4px 10px rgba(0, 0, 0, 0.9);
   background-color: #edf2f4;
   color: #2b2d42;
+  max-width: 600px;
 }
 
 .ce-loading {
@@ -145,4 +150,20 @@ i {
   to {
     transform: rotate(1turn);
   }
+}
+
+section p {
+  margin-top: 5px;
+}
+
+.ce-not-found {
+  width: 400px;
+  height: 200px;
+  padding: 20px;
+  font-size: 24px;
+  background-color: #edf2f4;
+  color: #2b2d42;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

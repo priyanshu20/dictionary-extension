@@ -1,12 +1,4 @@
-/* DEFAULT STATE OF CHROME EXTENTION
-Runs every time the extention is installed or re installed
-*/
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.local.set({ wordList: [] });
-});
-
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  // console.log(tabId,changeInfo,tab);
   if (changeInfo.status === "complete" && /^http/.test(tab.url)) {
     chrome.scripting
       .insertCSS({

@@ -1,10 +1,8 @@
-let htmlBody = document.querySelector("body");
-
-htmlBody.addEventListener("mouseup", (event) => {
+document.querySelector("body").addEventListener("mouseup", (event) => {
   let deleteModal = document.querySelector(".ce-modal");
-  if (deleteModal) {
-    deleteModal.parentElement.removeChild(deleteModal);
-  }
+  if (deleteModal) deleteModal.parentElement.removeChild(deleteModal);
+  let deleteNotFound = document.querySelector(".ce-not-found");
+  if (deleteNotFound) deleteNotFound.parentElement.removeChild(deleteNotFound);
   let selectedText = window.getSelection().toString();
   if (selectedText) {
     let words = selectedText.trim().split(" ");
@@ -21,13 +19,26 @@ htmlBody.addEventListener("mouseup", (event) => {
         (response) => {
           console.log(response.data);
           loader.parentElement.removeChild(loader);
-          populateModal(response.data, event);
-          ceModal.style.display = "block";
-          carouselFunctionality(response.data);
+          if (response.data.title === "No Definitions Found") {
+            populateNotFound(event);
+          } else {
+            try {
+              populateModal(response.data, event);
+            } catch (err) {}
+          }
         }
       );
     } else console.log("That's a sentence create a highlight");
   }
+
+  let linkMaterialFonts = document.createElement("link");
+  linkMaterialFonts.setAttribute(
+    "href",
+    "https://fonts.googleapis.com/icon?family=Material+Icons"
+  );
+  linkMaterialFonts.setAttribute("rel", "stylesheet");
+
+  document.querySelector("head").appendChild(linkMaterialFonts);
 });
 
 const carouselFunctionality = (data) => {
@@ -92,23 +103,19 @@ const populateModal = (data, event) => {
     }
     meanings = data[0].meanings;
   }
+  let audioElement = document.createElement("audio");
+  if (audioLink) audioElement.setAttribute("src", audioLink);
+  // else
+  // set audio element to an error sound!
 
   let ceModal = document.createElement("div");
   ceModal.classList.add("ce-modal");
+  ceModal.appendChild(audioElement);
 
   let ceModalContainer = document.createElement("div");
   ceModalContainer.classList.add("ce-modal-container");
 
   ceModal.appendChild(ceModalContainer);
-
-  let linkMaterialFonts = document.createElement("link");
-  linkMaterialFonts.setAttribute(
-    "href",
-    "https://fonts.googleapis.com/icon?family=Material+Icons"
-  );
-  linkMaterialFonts.setAttribute("rel", "stylesheet");
-
-  document.querySelector("head").appendChild(linkMaterialFonts);
 
   let ceHeader = document.createElement("div");
   ceHeader.classList.add("ce-header");
@@ -120,29 +127,21 @@ const populateModal = (data, event) => {
   let ceHeaderIcons = document.createElement("div");
   ceHeaderIcons.classList.add("ce-header-icons");
 
-  let saveIcon = document.createElement("i");
-  saveIcon.innerText = "save";
-  saveIcon.classList.add("material-icons");
-  saveIcon.id = "save-icon";
-  saveIcon.addEventListener("click", () => {
-    chrome.storage.local.get("wordList", (result) => {
-      console.log(result.wordList);
-      let wordList = result.wordList;
-      if (!wordList.includes(word)) wordList.push(word);
-      chrome.storage.local.set({ wordList: wordList });
-    });
-  });
-
   let volumeIcon = document.createElement("i");
   volumeIcon.innerText = "volume_up";
   volumeIcon.classList.add("material-icons");
   volumeIcon.id = "volume-icon";
   volumeIcon.addEventListener("click", () => {
-    console.log("Played the audio");
+    try {
+      if (audioLink) audioElement.play();
+    } catch (err) {
+      console.log(
+        "Unfortunately due to the security settings of the website, we cannot play the audio"
+      );
+    }
   });
 
   ceHeader.appendChild(ceWord);
-  ceHeaderIcons.appendChild(saveIcon);
   ceHeaderIcons.appendChild(volumeIcon);
   ceHeader.appendChild(ceHeaderIcons);
 
@@ -219,8 +218,11 @@ const populateModal = (data, event) => {
 
   document.querySelector("html").appendChild(ceModal);
 
-  let windowHeight = window.screen.availHeight;
-  let windowWidth = window.screen.availWidth;
+  carouselFunctionality(data);
+
+  let windowHeight = window.innerHeight;
+  let windowWidth = window.innerWidth;
+
   if (windowWidth - event.clientX < ceModal.offsetWidth)
     ceModal.style.left = `${event.clientX - ceModal.offsetWidth}px`;
   else ceModal.style.left = `${event.clientX}px`;
@@ -233,4 +235,14 @@ const getLoader = () => {
   let loader = document.createElement("div");
   loader.classList.add("ce-loading");
   return loader;
+};
+
+const populateNotFound = (event) => {
+  let ceNotFound = document.createElement("div");
+  ceNotFound.classList.add("ce-not-found");
+  ceNotFound.innerText = "Could not find any definition for the given word.";
+  ceNotFound.style.position = "fixed";
+  ceNotFound.style.top = `${event.clientY}px`;
+  ceNotFound.style.left = `${event.clientX}px`;
+  document.querySelector("html").appendChild(ceNotFound);
 };
