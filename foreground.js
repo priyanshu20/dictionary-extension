@@ -41,7 +41,7 @@ document.querySelector("body").addEventListener("mouseup", (event) => {
   document.querySelector("head").appendChild(linkMaterialFonts);
 });
 
-const carouselFunctionality = (data) => {
+function carouselFunctionality(data) {
   let word, wordPronunciation, audioLink, meanings;
   if (data[0]) {
     word = data[0].word;
@@ -91,9 +91,9 @@ const carouselFunctionality = (data) => {
     indicatorParent.children[index].classList.add("ce-selected");
     slider.style.transform = "translateX(" + index * -translateValue + "%)";
   });
-};
+}
 
-const populateModal = (data, event) => {
+function populateModal(data, event) {
   let word, audioLink, meanings;
   if (data[0]) {
     word = data[0].word;
@@ -134,11 +134,7 @@ const populateModal = (data, event) => {
   volumeIcon.addEventListener("click", () => {
     try {
       if (audioLink) audioElement.play();
-    } catch (err) {
-      console.log(
-        "Unfortunately due to the security settings of the website, we cannot play the audio"
-      );
-    }
+    } catch (err) {}
   });
 
   ceHeader.appendChild(ceWord);
@@ -229,15 +225,15 @@ const populateModal = (data, event) => {
   if (windowHeight - event.clientY < ceModal.offsetHeight)
     ceModal.style.top = `${event.clientY - ceModal.offsetHeight}px`;
   else ceModal.style.top = `${event.clientY}px`;
-};
+}
 
-const getLoader = () => {
+function getLoader() {
   let loader = document.createElement("div");
   loader.classList.add("ce-loading");
   return loader;
-};
+}
 
-const populateNotFound = (event) => {
+function populateNotFound(event) {
   let ceNotFound = document.createElement("div");
   ceNotFound.classList.add("ce-not-found");
   ceNotFound.innerText = "Could not find any definition for the given word.";
@@ -245,4 +241,4 @@ const populateNotFound = (event) => {
   ceNotFound.style.top = `${event.clientY}px`;
   ceNotFound.style.left = `${event.clientX}px`;
   document.querySelector("html").appendChild(ceNotFound);
-};
+}
